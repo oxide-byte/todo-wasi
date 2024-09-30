@@ -1,0 +1,24 @@
+
+services:
+
+  postgres:
+    container_name: postgres
+    build: infrastructure/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - devnet
+
+  http-server:
+    depends_on:
+      - postgres
+    container_name: http_server
+    build: .
+    ports:
+      - "8080:8080"
+    networks:
+      - devnet
+
+networks:
+  devnet:
+    driver: bridge
